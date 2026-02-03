@@ -27,7 +27,7 @@ docker run  -dit --name blackboard -P -p 48030:48030/tcp --hostname localhost  d
 
 Install and run the UDP Top-side Drilling Data to DWIS bridge run the following command:
 ```sh
-docker run -dit --name UDPTopSideData -v c:\Volumes\DWISDAQBridgeUDPTopSideDataServer:/home digiwells/dwisdaqbridgeudptopsidedataserver:stable
+docker run -dit --name UDPTopSideData -p 1502:1502/udp -v c:\Volumes\DWISDAQBridgeUDPTopSideDataServer:/home digiwells/dwisdaqbridgeudptopsidedataserver:stable
 ```
 Here is an example config.json file for a docker based configuration.
 ```json
