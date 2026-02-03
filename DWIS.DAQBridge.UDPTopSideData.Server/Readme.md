@@ -32,7 +32,7 @@ docker run -dit --name UDPTopSideData -v c:\Volumes\DWISDAQBridgeUDPTopSideDataS
 Here is an example config.json file for a docker based configuration.
 ```json
 {
-  "LoopDuration": "00:00:01.1000000",
+  "LoopDuration": "00:00:00.1000000",
   "GeneralBlackboard": "opc.tcp://host.docker.internal:48030",
   "UDPPort": "1502",
   "Culture": "nb-NO"
