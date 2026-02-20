@@ -6,5 +6,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Model
     {
         public int? UDPPort { get; set; } = null;
         public string? Culture { get; set; } = null;
+
+        public bool UseJson { get; set; } = false;
     }
 }
