@@ -161,13 +161,19 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
                 {
                     string srecord = code.Substring(0, 2);
                     string srow = code.Substring(2);
-                    if (int.TryParse(srecord, out int record) && int.TryParse(srow, out int row) && double.TryParse(sval, out double val))
+                    if (int.TryParse(srecord, out int record) && int.TryParse(srow, out int row) && double.TryParse(sval, NumberStyles.Float, CultureInfo.InvariantCulture, out double val))
                     {
                         if (record == 1)
                         {
                             switch (row)
                             {
                                 case 8: // bit depth (m)
+                                    if (UDPTopSideData.BottomOfStringDepth is not null)
+                                    {
+                                        // convert m
+                                        val *= 1.0;
+                                        UDPTopSideData.BottomOfStringDepth.Value = val;
+                                    }
                                     break;
                                 case 12: // block position (m)
                                     if (UDPTopSideData.BlockPosition is not null)
@@ -181,7 +187,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
                                     if (UDPTopSideData.SurfaceRateOfPenetration is not null)
                                     {
                                         // convert m/hr
-                                        val *= 3600.0;
+                                        val /= 3600.0;
                                         UDPTopSideData.SurfaceRateOfPenetration.Value = val;
                                     }
                                     break;
@@ -331,7 +337,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
                             if (UDPTopSideData.SurfaceRateOfPenetration is not null)
                             {
                                 // convert m/hr
-                                val *= 3600.0;
+                                val /= 3600.0;
                                 UDPTopSideData.SurfaceRateOfPenetration.Value = val;
                             }
                         }
