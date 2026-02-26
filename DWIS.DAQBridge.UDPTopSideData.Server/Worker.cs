@@ -57,6 +57,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
                 {
                     await ReadBlackboardAsync(BottomHoleDepthData, stoppingToken);
                     await ReadUDP();
+                    ExtraSignals.BottomHoleDepth ??= new ScalarProperty();
                     if (ExtraSignals.BottomHoleDepth is not null && BottomHoleDepthData.BottomHoleDepth is not null)
                     {
                         ExtraSignals.BottomHoleDepth.Value = BottomHoleDepthData.BottomHoleDepth.Value;
@@ -225,6 +226,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
                                     }
                                     break;
                                 case 23: // SPM #1
+                                    ExtraSignals.PumpStrokeRate1 ??= new ScalarProperty();
                                     if (ExtraSignals.PumpStrokeRate1 is not null)
                                     {
                                         val /= 60.0;
@@ -232,6 +234,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
                                     }
                                     break;
                                 case 24: // SPM #2
+                                    ExtraSignals.PumpStrokeRate2 ??= new ScalarProperty();
                                     if (ExtraSignals.PumpStrokeRate2 is not null)
                                     {
                                         val /= 60.0;
