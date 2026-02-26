@@ -37,6 +37,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
                 Culture = new CultureInfo((!string.IsNullOrEmpty(confUDP.Culture)) ? confUDP.Culture : DefaultCulture);
             }
             ConnectToUDP();
+            ConnectToOPCUA();
             ConnectToBlackboard();
             if (Configuration is not null && _DWISClient != null && _DWISClient.Connected)
             {
