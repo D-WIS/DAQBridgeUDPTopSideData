@@ -12,10 +12,12 @@ using DWIS.DAQBridge.UDPTopSideData.Model;
 
 namespace DWIS.DAQBridge.UDPTopSideData.Server
 {
-    public class Worker : DWISWorker<ConfigurationForUDP>
+    public class Worker : DWISWorkerWithOPCUA<ConfigurationForUDP>
     {
         public static string DefaultCulture = "nb-NO";
         private Model.UDPTopSideData UDPTopSideData { get; set; } = new Model.UDPTopSideData();
+        private Model.BottomHoleDepthData BottomHoleDepthData { get; set; } = new Model.BottomHoleDepthData();
+        private Model.ExtraSignals ExtraSignals { get; set; } = new Model.ExtraSignals();
 
         private int UDPPort { get; set; } = 1502;
 
@@ -39,6 +41,8 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
             if (Configuration is not null && _DWISClient != null && _DWISClient.Connected)
             {
                 await RegisterToBlackboard(UDPTopSideData);
+                await RegisterToOPCUA(ExtraSignals, "BaseStarDataManifest", "Halliburton");
+                await RegisterQueries(BottomHoleDepthData);
                 await Loop(stoppingToken);
             }
         }
@@ -50,11 +54,14 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
             {
                 try
                 {
+                    await ReadBlackboardAsync(BottomHoleDepthData, stoppingToken);
                     await ReadUDP();
-                    DateTime d1 = DateTime.UtcNow;
+                    if (ExtraSignals.BottomHoleDepth is not null && BottomHoleDepthData.BottomHoleDepth is not null)
+                    {
+                        ExtraSignals.BottomHoleDepth.Value = BottomHoleDepthData.BottomHoleDepth.Value;
+                    }
                     await PublishBlackboardAsync(UDPTopSideData, stoppingToken);
-                    DateTime d2 = DateTime.UtcNow;
-                    double elapsed = (d2 - d1).TotalSeconds;
+                    await PublishOPCUAAsync(ExtraSignals, null, null, null, stoppingToken);
                     lock (_lock)
                     {
                         if (Logger is not null && Logger.IsEnabled(LogLevel.Information) &&
@@ -211,8 +218,18 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
                                     }
                                     break;
                                 case 23: // SPM #1
+                                    if (ExtraSignals.PumpStrokeRate1 is not null)
+                                    {
+                                        val /= 60.0;
+                                        ExtraSignals.PumpStrokeRate1.Value = val;
+                                    }
                                     break;
                                 case 24: // SPM #2
+                                    if (ExtraSignals.PumpStrokeRate2 is not null)
+                                    {
+                                        val /= 60.0;
+                                        ExtraSignals.PumpStrokeRate2.Value = val;
+                                    }
                                     break;
                                 case 26: // Active Vol (m3)
                                     if (UDPTopSideData.ActiveVolume is not null)

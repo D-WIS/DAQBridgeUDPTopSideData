@@ -2,7 +2,7 @@
 
 namespace DWIS.DAQBridge.UDPTopSideData.Model
 {
-    public class ConfigurationForUDP : Configuration
+    public class ConfigurationForUDP : ConfigurationForOPCUA
     {
         public int? UDPPort { get; set; } = null;
         public string? Culture { get; set; } = null;
