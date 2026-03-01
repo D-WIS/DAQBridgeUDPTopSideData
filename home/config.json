@@ -1,1 +1,13 @@
-{"UDPPort":null,"Culture":null,"LoopDuration":"00:00:01","GeneralBlackboard":"opc.tcp://localhost:48030"}
+{
+  "UDPPort": null,
+  "Culture": null,
+  "UseJson": false,
+  "OPCUAURL": "opc.tcp://localhost:48030",
+  "OPCUALoopDuration": "00:00:01",
+  "NameSpace": null,
+  "NodeIDPrefix": null,
+  "OPCUAIDs": null,
+  "UnitConversions": null,
+  "LoopDuration": "00:00:01",
+  "GeneralBlackboard": "opc.tcp://localhost:48030"
+}
