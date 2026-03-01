@@ -61,6 +61,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Model
         [SemanticFact("activeVolume#01", Verbs.Enum.IsTransformationOutput, "movingAverageactiveVolume")]
         [SemanticFact("activePitLogical#01", Nouns.Enum.ActivePitLogical)]
         [SemanticFact("activeVolume#01", Verbs.Enum.IsVolumeAt, "activePitLogical#01")]
+        [SemanticFact("activeVolume#01", Nouns.Enum.ActiveVolume)]
         public ScalarProperty? ActiveVolume { get; set; } = null;
 
         [AccessToVariable(CommonProperty.VariableAccessType.Assignable)]

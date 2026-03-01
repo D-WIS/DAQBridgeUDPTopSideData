@@ -8,5 +8,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Model
         public string? Culture { get; set; } = null;
 
         public bool UseJson { get; set; } = false;
+
+        public bool ForcePublishSemantic { get; set; } = false; 
     }
 }

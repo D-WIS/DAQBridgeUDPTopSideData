@@ -12,7 +12,7 @@ using DWIS.DAQBridge.UDPTopSideData.Model;
 
 namespace DWIS.DAQBridge.UDPTopSideData.Server
 {
-    public class Worker : DWISWorkerWithOPCUA<ConfigurationForUDP>
+    public class Worker : DWISWorkerWithOPCUA<ConfigurationForUDP, object>
     {
         public static string DefaultCulture = "nb-NO";
         private Model.UDPTopSideData UDPTopSideData { get; set; } = new Model.UDPTopSideData();
@@ -40,7 +40,7 @@ namespace DWIS.DAQBridge.UDPTopSideData.Server
             ConnectToBlackboard();
             if (Configuration is not null && _DWISClient != null && _DWISClient.Connected)
             {
-                await RegisterToBlackboard(UDPTopSideData);
+                await RegisterToBlackboard(UDPTopSideData, Configuration.ForcePublishSemantic);
                 await RegisterToOPCUA(ExtraSignals, "BaseStarDataManifest", "Halliburton");
                 await RegisterQueries(BottomHoleDepthData);
                 await Loop(stoppingToken);

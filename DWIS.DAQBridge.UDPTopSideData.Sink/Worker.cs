@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DWIS.DAQBridge.UDPTopSideData.Sink
 {
-    public class Worker : DWISWorker<Configuration>
+    public class Worker : DWISWorker<Configuration, object>
     {
         private Model.UDPTopSideData UDPTopSideData { get; set; } = new Model.UDPTopSideData();
 

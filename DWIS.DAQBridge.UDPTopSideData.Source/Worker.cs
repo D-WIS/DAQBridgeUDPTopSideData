@@ -9,7 +9,7 @@ using System.Text;
 
 namespace DWIS.DAQBridge.UDPTopSideData.Source
 {
-    public class Worker : DWISWorker<ConfigurationForUDP>
+    public class Worker : DWISWorker<ConfigurationForUDP, object>
     {
         public static string DefaultCulture = "nb-NO";
         private int UDPPort { get; set; } = 1502;
